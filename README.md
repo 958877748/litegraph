@@ -6,7 +6,7 @@
 
 [Demo](https://gausszhou.github.io/litegraph/demo) or [Docs](https://gausszhou.github.io/litegraph/docs)
 
-![01](https://file.gausszhou.top/api/public/dl/QRsWFb27/litegraph/01.webp)
+![01](https://www.gausszhou.top/static/data/i/github/litegraph/01.webp)
 
 ## Todo
 
