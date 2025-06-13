@@ -8,22 +8,39 @@ export default class Item extends LGraphNode {
     static registerType = "rpg/item";
     static filter = "is_filter";
 
-    constructor() {
+    properties = {
+        id: -1,
+        name: '',
+        description: '',
+    };
+
+    constructor(id?: number, name?: string, description?: string) {
         super();
+        if (id) {
+            this.properties.id = id
+        }
+        if (name) {
+            this.properties.name = name
+        }
+        if (description) {
+            this.properties.description = description
+        }
+
         // 添加输出端口 名字是 item 类型为 "Item"
         this.addOutput("item", "Item");
-
-        this.properties = {
-            id: -1,
-            name: '',
-            description: '',
-        };
 
         this.addWidget(
             "text",         // 控件类型
             "name",           // 显示名称
             this.properties.name, // 初始值
             "name",           // 绑定到 properties.name
+        );
+
+        this.addWidget(
+            "text",         // 控件类型
+            "desc",           // 显示名称
+            this.properties.description, // 初始值
+            "description",           // 绑定到 properties.description
         );
     }
 
@@ -48,7 +65,7 @@ export default class Item extends LGraphNode {
         if (this.properties.id === -1) {
             // 如果id是-1，说明是新建的item，需要分配一个新的id
             this.properties.id = this.findNextAvailableId();
-            console.log(`Assigned new ID: ${this.properties.id}`);
+            console.log(`Item Assigned new ID: ${this.properties.id}`);
         }
     }
 }
