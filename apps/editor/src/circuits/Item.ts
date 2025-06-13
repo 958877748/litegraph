@@ -1,9 +1,5 @@
 import { LGraphNode, LGraph } from "@gausszhou/litegraph-core";
 
-function findNextAvailableId(graph: LGraph): number {
-
-}
-
 export default class Item extends LGraphNode {
     static title = "Item";
     static desc = "Item";
@@ -22,6 +18,17 @@ export default class Item extends LGraphNode {
             name: '',
             description: '',
         };
+
+        this.addWidget(
+            "text",         // 控件类型
+            "name",           // 显示名称
+            this.properties.name, // 初始值
+            "name",           // 绑定到 properties.name
+        );
+    }
+
+    onConfigure(info: any) {
+        this.size = this.computeSize()
     }
 
     findNextAvailableId(): number {
