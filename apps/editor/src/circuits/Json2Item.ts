@@ -1,5 +1,5 @@
 import { LGraphNode, LGraph } from "@gausszhou/litegraph-core";
-import Item from "./Item";
+import TaskItem from "./TaskItem";
 
 export default class Json2Item extends LGraphNode {
     static title = "Json2Item";
@@ -64,11 +64,11 @@ export default class Json2Item extends LGraphNode {
     }
 
     private static nextXPosition = 0; // 用于记录下一个节点的x位置
-    private static nodeSpacing = 200; // 节点之间的间距
+    private static nodeSpacing = 220; // 节点之间的间距
 
     newItem(id: number, name: string, description: string) {
         // 创建新的Item节点
-        const item = new Item(id, name, description);
+        const item = new TaskItem(id, name, description);
 
         // 设置节点位置
         const x = Json2Item.nextXPosition;

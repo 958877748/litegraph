@@ -1,11 +1,11 @@
 import { LGraphNode, LGraph } from "@gausszhou/litegraph-core";
 
-export default class Item extends LGraphNode {
-    static title = "Item";
-    static desc = "Item";
+export default class TaskItem extends LGraphNode {
+    static title = "TaskItem";
+    static desc = "TaskItem";
     static shape = 1;
     static title_color = "#012";
-    static registerType = "rpg/item";
+    static registerType = "rpg/TaskItem";
     static filter = "is_filter";
 
     properties = {
@@ -26,8 +26,8 @@ export default class Item extends LGraphNode {
             this.properties.description = description
         }
 
-        // 添加输出端口 名字是 item 类型为 "Item"
-        this.addOutput("item", "Item");
+        // 添加输出端口 名字 类型
+        this.addOutput("Output", "TaskItem");
 
         this.addWidget(
             "text",         // 控件类型
@@ -51,7 +51,7 @@ export default class Item extends LGraphNode {
     findNextAvailableId(): number {
         const usedIds = new Set<number>();
         for (const node of this.graph._nodes) {
-            if (node instanceof Item) {
+            if (node instanceof TaskItem) {
                 usedIds.add(node.properties.id);
             }
         }

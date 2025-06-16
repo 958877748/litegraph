@@ -1,10 +1,10 @@
 import LED from "./LED";
 import Oscillator from "./Oscillator";
-import Item from "./Item";
+import TaskItem from "./TaskItem";
 import Json2Item from "./Json2Item";
 
 const install = (LiteGraph) => {
-  const registerList = [Oscillator, LED, Item, Json2Item];
+  const registerList = [Oscillator, LED, TaskItem, Json2Item];
   registerList.forEach(node => {
     LiteGraph.registerNodeType({
       type: node.registerType,
