@@ -68,14 +68,10 @@ export default class Json2Item extends LGraphNode {
 
     newItem(id: number, name: string, description: string) {
         // 创建新的Item节点
-        const item = LiteGraph.createNode(TaskItem, 'TaskItem', {
-            constructorArgs: [],
-            instanceProps: {
-                id: id,
-                name: name,
-                description: description
-            }
-        });
+        const item = LiteGraph.createNode(TaskItem);
+        item.setProperty('id', id)
+        item.setProperty('name', name)
+        item.setProperty('description', description)
 
         // 设置节点位置
         const x = Json2Item.nextXPosition;
