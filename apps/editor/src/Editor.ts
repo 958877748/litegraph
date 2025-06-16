@@ -7,6 +7,7 @@ import {
 
 import circuits from "./circuits/index";
 import features from "./features/index";
+import { getDataFromJSONBin, saveJsonToJSONBin } from "./JsonBin";
 LiteGraph.use(circuits);
 LiteGraph.use(features);
 LiteGraph.debug = false;
@@ -22,14 +23,14 @@ interface OptionElemExt extends HTMLOptionElement {
   callback?: () => void;
 }
 
-export interface EditorPanel extends HTMLDivElement {}
+export interface EditorPanel extends HTMLDivElement { }
 
 export interface EditorMiniWindowPanel extends HTMLDivElement {
   graphCanvas: LGraphCanvas;
   close: () => void;
 }
 
-export interface EditorLoadCounter extends HTMLDivElement {}
+export interface EditorLoadCounter extends HTMLDivElement { }
 
 export default class Editor {
   containerId: string;
@@ -259,8 +260,10 @@ export default class Editor {
   save() {
     console.log(this)
     try {
-      const json = JSON.stringify(this.graph.serialize());
-      localStorage.setItem("graphdemo_save",json);
+      const obj = this.graph.serialize();
+      // const json = JSON.stringify(obj);
+      // localStorage.setItem("graphdemo_save", json);
+      saveJsonToJSONBin(obj);
       console.log("saved");
     } catch (error) {
       console.log("save error", error);
@@ -268,15 +271,19 @@ export default class Editor {
   }
 
   load() {
-    const data = localStorage.getItem("graphdemo_save");
-    if (data) {
-      try {
-        this.graph.configure(JSON.parse(data));
-        console.log("loaded");
-      } catch (error) {
-        console.log("load error", error);
-      }
-    }
+    // const data = localStorage.getItem("graphdemo_save");
+    // if (data) {
+    //   try {
+    //     this.graph.configure(JSON.parse(data));
+    //     console.log("loaded");
+    //   } catch (error) {
+    //     console.log("load error", error);
+    //   }
+    // }
+    getDataFromJSONBin().then((data) => {
+      this.graph.configure(data);
+      console.log("loaded");
+    });
   }
 
   download() {
