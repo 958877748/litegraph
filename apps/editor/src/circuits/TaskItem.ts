@@ -1,4 +1,4 @@
-import { LGraphNode, LGraph } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export default class TaskItem extends LGraphNode {
     static title = "TaskItem";
@@ -14,20 +14,19 @@ export default class TaskItem extends LGraphNode {
         description: '',
     };
 
-    constructor(id?: number, name?: string, description?: string) {
+    constructor() {
         super();
-        if (id) {
-            this.properties.id = id
-        }
-        if (name) {
-            this.properties.name = name
-        }
-        if (description) {
-            this.properties.description = description
-        }
 
         // 添加输出端口 名字 类型
         this.addOutput("Output", "TaskItem");
+
+        // 添加只读的ID显示控件
+        this.addWidget(
+            "text",         // 控件类型
+            "ID",           // 显示名称
+            this.properties.id, // 初始值
+            "id",           // 绑定到 properties.id
+        );
 
         this.addWidget(
             "text",         // 控件类型
@@ -42,10 +41,6 @@ export default class TaskItem extends LGraphNode {
             this.properties.description, // 初始值
             "description",           // 绑定到 properties.description
         );
-    }
-
-    onConfigure(info: any) {
-        this.size = this.computeSize()
     }
 
     findNextAvailableId(): number {
@@ -64,8 +59,12 @@ export default class TaskItem extends LGraphNode {
     onAdded() {
         if (this.properties.id === -1) {
             // 如果id是-1，说明是新建的item，需要分配一个新的id
-            this.properties.id = this.findNextAvailableId();
-            console.log(`Item Assigned new ID: ${this.properties.id}`);
+            const newId = this.findNextAvailableId();
+            this.setProperty('id', newId);
         }
+    }
+
+    onConfigure(info: any) {
+        this.size = this.computeSize()
     }
 }

@@ -1,4 +1,4 @@
-import { LGraphNode, LGraph } from "@gausszhou/litegraph-core";
+import { LGraphNode, LGraph, LiteGraph } from "@gausszhou/litegraph-core";
 import TaskItem from "./TaskItem";
 
 export default class Json2Item extends LGraphNode {
@@ -68,7 +68,14 @@ export default class Json2Item extends LGraphNode {
 
     newItem(id: number, name: string, description: string) {
         // 创建新的Item节点
-        const item = new TaskItem(id, name, description);
+        const item = LiteGraph.createNode(TaskItem, 'TaskItem', {
+            constructorArgs: [],
+            instanceProps: {
+                id: id,
+                name: name,
+                description: description
+            }
+        });
 
         // 设置节点位置
         const x = Json2Item.nextXPosition;
