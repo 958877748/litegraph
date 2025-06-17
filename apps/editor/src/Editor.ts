@@ -7,7 +7,7 @@ import {
 
 import circuits from "./circuits/index";
 import features from "./features/index";
-import { getDataFromJSONBin, saveJsonToJSONBin } from "./JsonBin";
+import { getJson, saveJson } from "./JsonBin";
 LiteGraph.use(circuits);
 LiteGraph.use(features);
 LiteGraph.debug = false;
@@ -263,7 +263,7 @@ export default class Editor {
       const obj = this.graph.serialize();
       // const json = JSON.stringify(obj);
       // localStorage.setItem("graphdemo_save", json);
-      saveJsonToJSONBin(obj);
+      saveJson(obj)
       console.log("saved");
     } catch (error) {
       console.log("save error", error);
@@ -280,7 +280,7 @@ export default class Editor {
     //     console.log("load error", error);
     //   }
     // }
-    getDataFromJSONBin().then((data) => {
+    getJson().then((data) => {
       this.graph.configure(data);
       console.log("loaded");
     });

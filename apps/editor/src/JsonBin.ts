@@ -1,45 +1,48 @@
-let API_KEY = '$2a$10$UHk4r3Qzimqfts1zhv.C';
-API_KEY += 'M.qOkpGA7qP0nMNitX20L8RmSjZvFAlHu';
-const BIN_ID = '684fe2b68561e97a50251652';
+const workerUrl = 'https://json-api.txdygl.workers.dev';
+const key = 'data';
+// 保存 JSON 数据
+export async function saveJson(value: object) {
+    const url = `${workerUrl}/save`;
+    const data = { key: key, value: value };
 
-export async function saveJsonToJSONBin(value: object) {
-    const url = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
 
-    const response = await fetch(url, {
-        method: 'PUT',  // PUT 用于更新整个 bin
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Access-Key': API_KEY
-        },
-        body: JSON.stringify(value)
-    });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-    if (!response.ok) {
-        throw new Error(`保存失败: ${response.statusText}`);
+        const result = await response.text();
+        console.log('Data saved:', result);
+        return result;
+    } catch (error) {
+        console.error('Failed to save data:', error);
+        return null;
     }
-
-    const result = await response.json();
-    console.log('保存成功:', result);
-    return result;
 }
 
-export async function getDataFromJSONBin() {
-    const url = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+// 获取 JSON 数据
+export async function getJson() {
+    const url = `${workerUrl}/get?key=${key}`;
 
-    const response = await fetch(url, {
-        headers: {
-            'X-Access-Key': API_KEY
-        }
-    });
+    try {
+        const response = await fetch(url);
 
-    if (!response.ok) {
-        if (response.status === 404) {
-            // bin 为空或不存在，返回空对象
-            return {};
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-        throw new Error(`读取失败: ${response.statusText}`);
+
+        const json = await response.json();
+        console.log('Data retrieved:', json);
+        return json;
+    } catch (error) {
+        console.error('Failed to retrieve data:', error);
+        return null;
     }
-
-    const result = await response.json();
-    return result.record;
 }
