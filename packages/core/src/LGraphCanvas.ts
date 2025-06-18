@@ -1946,9 +1946,8 @@ export default class LGraphCanvas
 
         function inner_value_change(widget: IWidget, value: any) {
             widget.value = value;
-            // -start- 
-            // gl 2025/06/18 14点21分 widget add text2int
-            if (widget.options.text2int === true) {
+            // 用户手动修改文本值时 如果有text2int属性 则保存数字 显示字符串
+            if (widget.type === 'text' && widget.options.text2int === true) {
                 if (widget.options && widget.options.property && node.properties[widget.options.property] !== undefined) {
                     try {
                         const int = parseInt(value);
@@ -1965,7 +1964,15 @@ export default class LGraphCanvas
                 }
                 return null;
             }
-            // -end-
+            // 用户手动修改下拉框值时 如果有enum属性 则保存数字 显示枚举字符串
+            if (widget.type === 'combo' && widget.options.enum) {
+                if (widget.options && widget.options.property && node.properties[widget.options.property] !== undefined) {
+                    const val = widget.options.enum[value];
+                    node.setProperty(widget.options.property, val);
+                }
+                return null;
+            }
+            // ---------------------------------------
             if (widget.options && widget.options.property && node.properties[widget.options.property] !== undefined) {
                 node.setProperty(widget.options.property, value);
             }

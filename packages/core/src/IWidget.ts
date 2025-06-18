@@ -83,6 +83,7 @@ export interface INumberWidget extends IWidget<INumberWidgetOptions, number> {
     type: "number";
 }
 export interface IComboWidgetOptions extends WidgetPanelOptions {
+    enum?: any;
     values:
     | string[]
     | ((widget: IComboWidget, node: LGraphNode) => string[]);

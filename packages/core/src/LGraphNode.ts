@@ -313,6 +313,14 @@ export default class LGraphNode {
                 var w = this.widgets[i];
                 if (!w)
                     continue;
+                // 场景还原时，combo控件 如果是枚举 需要特殊处理
+                if (w.type === 'combo' && w.options.enum) {
+                    if (w.options && w.options.property && this.properties[w.options.property]) {
+                        w.value = w.options.enum[this.properties[w.options.property]];
+                        continue;
+                    }
+                }
+                // ----------------------------------------
                 if (w.options && w.options.property && this.properties[w.options.property])
                     w.value = JSON.parse(JSON.stringify(this.properties[w.options.property]));
             }
@@ -491,13 +499,17 @@ export default class LGraphNode {
                 if (!w)
                     continue;
                 if (w.options.property == name) {
-                    // -start- 
-                    // gl 2025/06/18 14点21分 widget add text2int
-                    if (w.options.text2int === true) {
+                    // 代码中设置text属性值时 如果有text2int属性 则保存数字 显示字符串
+                    if (w.type === 'text' && w.options.text2int === true) {
                         w.value = `${value}`;
                         break;
                     }
-                    // -end-
+                    // 代码中设置combo属性值时 如果有enum属性 则保存数字 显示字符串
+                    if (w.type === 'combo' && w.options.enum) {
+                        w.value = w.options.enum[value];
+                        break;
+                    }
+                    // ---------------------------------------
                     w.value = value;
                     break;
                 }
