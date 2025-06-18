@@ -1,34 +1,19 @@
-import { IComboWidget, INumberWidget, ITextWidget, LGraph, LGraphCanvas, LGraphNode, Vector2 } from "@gausszhou/litegraph-core";
+import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export enum EquipType {
-    Weapon = 10,
-    Helmet = 11,
-    BodyArmour = 12,
-    Shield = 13,
-    Jewellery = 14
+    武器 = 10,
+    头盔 = 11,
+    胸甲 = 12,
+    盾牌 = 13,
+    首饰 = 14
 }
 
 export enum CharClass {
-    /**
-     * 通用
-     */
-    Common = 0,
-    /**
-     * 剑士
-     */
-    Swordsman = 1,
-    /**
-     * 魔法师
-     */
-    Mage = 2,
-    /**
-     * 战士
-     */
-    Warrior = 3,
-    /**
-     * 箭手
-     */
-    Archer = 4
+    通用 = 0,
+    剑士 = 1,
+    魔法师 = 2,
+    战士 = 3,
+    弓箭手 = 4
 }
 
 export default class EquipItem extends LGraphNode {
@@ -43,18 +28,15 @@ export default class EquipItem extends LGraphNode {
         id: -1,
         name: '',
         description: '',
-        type: EquipType.Weapon,
+        type: EquipType.武器,
         price: 0,
-        class: CharClass.Common,
+        class: CharClass.通用,
         hp: 0,
         mp: 0,
         attack: 0,
         defense: 0,
         speed: 0
     };
-
-    type_widget: IComboWidget
-    class_widget: IComboWidget
 
     constructor() {
         super();
@@ -64,27 +46,25 @@ export default class EquipItem extends LGraphNode {
         this.addWidget("text", "desc", this.properties.description, "description");
 
         // 添加装备类型选择控件
-        this.type_widget = this.addWidget(
+        this.addWidget(
             "combo",         // 使用下拉框控件
             "type",      // 显示名称
             EquipType[this.properties.type], // 初始值
-            (value: string) => {
-                this.properties.type = EquipType[value]
-            },
+            'type',
             {   // 配置选项             
-                values: Object.keys(EquipType).filter(key => isNaN(Number(key)))
+                values: Object.keys(EquipType).filter(key => isNaN(Number(key))),
+                enum: EquipType,
             }
         );
 
-        this.class_widget = this.addWidget(
+        this.addWidget(
             "combo",         // 使用下拉框控件
             "class",      // 显示名称
             CharClass[this.properties.class], // 初始值
-            (value: string) => {
-                this.properties.class = CharClass[value]
-            },
+            'class',
             {   // 配置选项             
-                values: Object.keys(CharClass).filter(key => isNaN(Number(key)))
+                values: Object.keys(CharClass).filter(key => isNaN(Number(key))),
+                enum: CharClass,
             }
         );
         this.addWidget('text', 'price', `${this.properties.price}`, 'price').options.text2int = true;
@@ -117,8 +97,6 @@ export default class EquipItem extends LGraphNode {
     }
 
     onConfigure(info: any) {
-        this.type_widget.value = EquipType[info.properties.type]
-        this.class_widget.value = CharClass[info.properties.class]
         this.size = this.computeSize()
     }
 }
