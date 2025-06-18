@@ -1952,6 +1952,12 @@ export default class LGraphCanvas
                 if (widget.options && widget.options.property && node.properties[widget.options.property] !== undefined) {
                     try {
                         const int = parseInt(value);
+                        if (isNaN(int)) {
+                            const node_value = node.properties[widget.options.property];
+                            widget.value = `${node_value}`;
+                            return null;
+                        }
+                        widget.value = `${int}`;
                         node.setProperty(widget.options.property, int);
                     } catch (error) {
                         console.error(error);
