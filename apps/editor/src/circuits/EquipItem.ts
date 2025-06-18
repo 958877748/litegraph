@@ -1,4 +1,4 @@
-import { IComboWidget, INumberWidget, LGraph, LGraphNode } from "@gausszhou/litegraph-core";
+import { IComboWidget, INumberWidget, ITextWidget, LGraph, LGraphCanvas, LGraphNode, Vector2 } from "@gausszhou/litegraph-core";
 
 export enum EquipType {
     Weapon = 10,
@@ -54,13 +54,12 @@ export default class EquipItem extends LGraphNode {
     };
 
     type_widget: IComboWidget
-    price_widget: INumberWidget
     class_widget: IComboWidget
 
     constructor() {
         super();
         this.addOutput("Output", "EquipItem");
-        this.addWidget("text", "ID", this.properties.id, "id");
+        this.addWidget("text", "ID", this.properties.id, "id").disabled = true;
         this.addWidget("text", "name", this.properties.name, "name");
         this.addWidget("text", "desc", this.properties.description, "description");
 
@@ -77,11 +76,6 @@ export default class EquipItem extends LGraphNode {
             }
         );
 
-        this.price_widget = this.addWidget("number", "price", this.properties.price,
-            (value: number) => {
-                this.properties.price = Math.round(value)
-            }, { precision: 0, step: 1, min: 0 });
-
         this.class_widget = this.addWidget(
             "combo",         // 使用下拉框控件
             "class",      // 显示名称
@@ -93,6 +87,12 @@ export default class EquipItem extends LGraphNode {
                 values: Object.keys(CharClass).filter(key => isNaN(Number(key)))
             }
         );
+        this.addWidget('text', 'price', `${this.properties.price}`, 'price').options.text2int = true;
+        this.addWidget('text', 'hp', this.properties.hp, 'hp').options.text2int = true;
+        this.addWidget('text', 'mp', this.properties.mp, 'mp').options.text2int = true;
+        this.addWidget('text', 'attack', this.properties.attack, 'attack').options.text2int = true;
+        this.addWidget('text', 'defense', this.properties.defense, 'defense').options.text2int = true;
+        this.addWidget('text', 'speed', this.properties.speed, 'speed').options.text2int = true;
     }
 
     findNextAvailableId(): number {
@@ -118,7 +118,6 @@ export default class EquipItem extends LGraphNode {
 
     onConfigure(info: any) {
         this.type_widget.value = EquipType[info.properties.type]
-        this.price_widget.value = info.properties.price
         this.class_widget.value = CharClass[info.properties.class]
         this.size = this.computeSize()
     }
