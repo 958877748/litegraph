@@ -57,13 +57,13 @@ export default class Json2Item extends LGraphNode {
     }
 
     newItems(items: Array<{ id: number, type: number, name: string, description: string }>) {
-        const pos = { x: 0, y: 500 }
+        const pos = { x: 0, y: 1200 + 350 + 350 }
         const dt = { x: 220, y: 0 }
         items.forEach(v => {
             // if (v.type === 30 && v.name && v.description) {
             //     this.newTaskItem(v.id, v.name, v.description)
             // }
-            if (v.type === 10) {
+            if (v.type === 14) {
                 this.newEquipItem(v, pos, dt)
             }
         })
@@ -92,6 +92,7 @@ export default class Json2Item extends LGraphNode {
         node.setProperty('description', data.description)
         node.setProperty('price', data.price)
         node.setProperty('class', data.requirements[1])
+        node.setProperty('type', data.type)
         let index = 2
         do {
             let type = data.requirements[index]
