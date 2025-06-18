@@ -491,6 +491,13 @@ export default class LGraphNode {
                 if (!w)
                     continue;
                 if (w.options.property == name) {
+                    // -start- 
+                    // gl 2025/06/18 14点21分 widget add text2int
+                    if (w.options.text2int === true) {
+                        w.value = `${value}`;
+                        break;
+                    }
+                    // -end-
                     w.value = value;
                     break;
                 }

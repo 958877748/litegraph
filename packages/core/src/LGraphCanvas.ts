@@ -1946,6 +1946,20 @@ export default class LGraphCanvas
 
         function inner_value_change(widget: IWidget, value: any) {
             widget.value = value;
+            // -start- 
+            // gl 2025/06/18 14点21分 widget add text2int
+            if (widget.options.text2int === true) {
+                if (widget.options && widget.options.property && node.properties[widget.options.property] !== undefined) {
+                    try {
+                        const int = parseInt(value);
+                        node.setProperty(widget.options.property, int);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+                return null;
+            }
+            // -end-
             if (widget.options && widget.options.property && node.properties[widget.options.property] !== undefined) {
                 node.setProperty(widget.options.property, value);
             }
