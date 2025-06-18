@@ -20,9 +20,11 @@ export async function saveJson(value: object) {
 
         const result = await response.text();
         console.log('Data saved:', result);
+        alert('saveJson success');
         return result;
     } catch (error) {
         console.error('Failed to save data:', error);
+        alert('saveJson failed');
         return null;
     }
 }
@@ -43,6 +45,7 @@ export async function getJson() {
         return json;
     } catch (error) {
         console.error('Failed to retrieve data:', error);
+        alert('getJson failed');
         return null;
     }
 }
