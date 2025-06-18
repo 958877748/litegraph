@@ -1,5 +1,6 @@
 import { LGraphNode, LGraph, LiteGraph } from "@gausszhou/litegraph-core";
 import TaskItem from "./TaskItem";
+import EquipItem from "./EquipItem";
 
 export default class Json2Item extends LGraphNode {
     static title = "Json2Item";
@@ -56,34 +57,70 @@ export default class Json2Item extends LGraphNode {
     }
 
     newItems(items: Array<{ id: number, type: number, name: string, description: string }>) {
+        const pos = { x: 0, y: 500 }
+        const dt = { x: 220, y: 0 }
         items.forEach(v => {
-            if (v.type === 30 && v.name && v.description) {
-                this.newItem(v.id, v.name, v.description)
+            // if (v.type === 30 && v.name && v.description) {
+            //     this.newTaskItem(v.id, v.name, v.description)
+            // }
+            if (v.type === 10) {
+                this.newEquipItem(v, pos, dt)
             }
         })
     }
 
-    private static nextXPosition = 0; // 用于记录下一个节点的x位置
-    private static nodeSpacing = 220; // 节点之间的间距
-
-    newItem(id: number, name: string, description: string) {
+    newTaskItem(data: any, pos: { x: number, y: number }, dt: { x: number, y: number }) {
         // 创建新的Item节点
-        const item = LiteGraph.createNode(TaskItem);
-        item.setProperty('id', id)
-        item.setProperty('name', name)
-        item.setProperty('description', description)
+        const item = LiteGraph.createNode(TaskItem)
+        item.setProperty('name', data.name)
+        item.setProperty('description', data.description)
 
         // 设置节点位置
-        const x = Json2Item.nextXPosition;
-        const y = 200; // 所有节点都放在y=0的位置
-        item.pos = [x, y];
+        item.pos = [pos.x, pos.y]
 
         // 更新下一个节点的位置
-        Json2Item.nextXPosition += Json2Item.nodeSpacing;
+        pos.x += dt.x
+        pos.y += dt.y
 
         // 将节点添加到当前画布
-        if (this.graph) {
-            this.graph.add(item);
-        }
+        this.graph.add(item)
+    }
+
+    newEquipItem(data: any, pos: { x: number, y: number }, dt: { x: number, y: number }) {
+        const node = LiteGraph.createNode(EquipItem)
+        node.setProperty('name', data.name)
+        node.setProperty('description', data.description)
+        node.setProperty('price', data.price)
+        node.setProperty('class', data.requirements[1])
+        let index = 2
+        do {
+            let type = data.requirements[index]
+            let value = data.requirements[index + 1]
+            switch (type) {
+                case 2:
+                    node.setProperty('hp', value)
+                    break;
+                case 4:
+                    node.setProperty('mp', value)
+                    break;
+                case 6:
+                    node.setProperty('attack', value)
+                    break;
+                case 7:
+                    node.setProperty('defense', value)
+                    break;
+                case 8:
+                    node.setProperty('speed', value)
+                    break;
+                default:
+                    console.error('unkonw type', type)
+                    break;
+            }
+            index += 3
+        } while (data.requirements.length > index);
+        node.pos = [pos.x, pos.y]
+        pos.x += dt.x
+        pos.y += dt.y
+        this.graph.add(node)
     }
 }
