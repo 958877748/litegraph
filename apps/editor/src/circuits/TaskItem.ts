@@ -26,7 +26,7 @@ export default class TaskItem extends LGraphNode {
             "ID",           // 显示名称
             this.properties.id, // 初始值
             "id",           // 绑定到 properties.id
-        );
+        ).disabled = true;
 
         this.addWidget(
             "text",         // 控件类型
