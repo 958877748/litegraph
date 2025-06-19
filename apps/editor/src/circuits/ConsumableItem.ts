@@ -1,5 +1,14 @@
 import { LGraphNode } from "@gausszhou/litegraph-core";
 
+enum ConsumableType {
+    单体回复 = 0,
+    全体回复 = 1,
+    单体复活加回复 = 2,
+}
+
+/**
+ * 消耗品
+ */
 export default class ConsumableItem extends LGraphNode {
     static title = "ConsumableItem";
     static desc = "ConsumableItem";
@@ -12,50 +21,29 @@ export default class ConsumableItem extends LGraphNode {
         id: -1,
         name: '',
         description: '',
-        targetType: '单体目标'
+        type: ConsumableType.单体回复,
+        price: 0,
+        hp: 0,
+        mp: 0,
     };
 
     constructor() {
         super();
 
-        // 添加输出端口 名字 类型
         this.addOutput("Output", "EquipItem");
 
-        // 添加只读的ID显示控件
-        this.addWidget(
-            "text",         // 控件类型
-            "ID",           // 显示名称
-            this.properties.id, // 初始值
-            "id",           // 绑定到 properties.id
-        );
+        this.addWidget("text", "ID", this.properties.id, "id").disabled = true;
+        this.addWidget("text", "name", this.properties.name, "name");
+        this.addWidget("text", "desc", this.properties.description, "description");
 
-        this.addWidget(
-            "text",         // 控件类型
-            "name",           // 显示名称
-            this.properties.name, // 初始值
-            "name",           // 绑定到 properties.name
-        );
+        this.addWidget("combo", "type", ConsumableType[this.properties.type], "type", {
+            values: Object.keys(ConsumableType).filter(key => isNaN(Number(key))),
+            enum: ConsumableType,
+        });
 
-        this.addWidget(
-            "text",         // 控件类型
-            "desc",           // 显示名称
-            this.properties.description, // 初始值
-            "description",           // 绑定到 properties.description
-        );
-
-        // 添加目标类型选择控件
-        this.addWidget(
-            "combo",         // 使用下拉框控件
-            "target",      // 显示名称
-            this.properties.targetType, // 初始值
-            "targetType",    // 绑定到 properties.targetType
-            {                // 配置选项
-                values: [
-                    "单体目标",
-                    "全体我方目标"
-                ]
-            }
-        );
+        this.addWidget("text", "price", this.properties.price, "price").options.text2int = true;
+        this.addWidget("text", "hp", this.properties.hp, "hp").options.text2int = true;
+        this.addWidget("text", "mp", this.properties.mp, "mp").options.text2int = true;
     }
 
     findNextAvailableId(): number {

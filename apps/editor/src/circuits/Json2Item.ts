@@ -1,6 +1,7 @@
 import { LGraphNode, LGraph, LiteGraph } from "@gausszhou/litegraph-core";
 import TaskItem from "./TaskItem";
 import EquipItem from "./EquipItem";
+import ConsumableItem from "./ConsumableItem";
 
 export default class Json2Item extends LGraphNode {
     static title = "Json2Item";
@@ -57,14 +58,14 @@ export default class Json2Item extends LGraphNode {
     }
 
     newItems(items: Array<{ id: number, type: number, name: string, description: string }>) {
-        const pos = { x: 0, y: 1200 + 350 + 350 }
+        const pos = { x: 0, y: 200 }
         const dt = { x: 220, y: 0 }
         items.forEach(v => {
             // if (v.type === 30 && v.name && v.description) {
             //     this.newTaskItem(v.id, v.name, v.description)
             // }
-            if (v.type === 14) {
-                this.newEquipItem(v, pos, dt)
+            if (v.type < 10) {
+                this.newConsumableItem(v, pos, dt)
             }
         })
     }
@@ -119,6 +120,20 @@ export default class Json2Item extends LGraphNode {
             }
             index += 3
         } while (data.requirements.length > index);
+        node.pos = [pos.x, pos.y]
+        pos.x += dt.x
+        pos.y += dt.y
+        this.graph.add(node)
+    }
+
+    newConsumableItem(data: any, pos: { x: number, y: number }, dt: { x: number, y: number }) {
+        const node = LiteGraph.createNode(ConsumableItem)
+        node.setProperty('name', data.name)
+        node.setProperty('description', data.description)
+        node.setProperty('price', data.price)
+        node.setProperty('type', data.type)
+        node.setProperty('hp', data.requirements[2])
+        node.setProperty('mp', data.requirements[3])
         node.pos = [pos.x, pos.y]
         pos.x += dt.x
         pos.y += dt.y
