@@ -14,6 +14,18 @@ export default class Json2Item extends LGraphNode {
     constructor() {
         super();
 
+        let the = this
+        // 添加文件选择按钮
+        this.addWidget(
+            "button",         // 控件类型
+            "add input",      // 显示名称
+            "add_input",          // 按钮文本
+            (button) => {
+                the.addInput("TaskItem", "TaskItem");
+                the.size = this.computeSize()
+            }
+        )
+
         // 添加文件选择按钮
         this.addWidget(
             "button",         // 控件类型
