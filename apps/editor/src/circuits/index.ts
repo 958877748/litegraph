@@ -6,9 +6,10 @@ import ConsumableItem from "./ConsumableItem";
 import EquipItem from "./EquipItem";
 import Say from "./Say";
 import AddItemToInventory from "./AddItemToInventory";
+import MoveCharacter from "./MoveCharacter";
 
 const install = (LiteGraph) => {
-  const registerList = [Oscillator, LED, TaskItem, Json2Item, EquipItem, ConsumableItem, Say, AddItemToInventory];
+  const registerList = [Oscillator, LED, TaskItem, Json2Item, EquipItem, ConsumableItem, Say, AddItemToInventory, MoveCharacter];
   registerList.forEach(node => {
     LiteGraph.registerNodeType({
       type: node.registerType,
