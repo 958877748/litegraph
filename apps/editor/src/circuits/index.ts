@@ -8,10 +8,13 @@ import Say from "./Say";
 import AddItemToInventory from "./AddItemToInventory";
 import MoveCharacter from "./MoveCharacter";
 import AddCharacterToScene from "./AddCharacterToScene";
-import SceneNode from "./SceneNode";
+import Scene from "./Scene";
+import SceneSwitch from "./SceneSwitch";
+import PositionTrigger from "./PositionTrigger";
 import ShowNotification from "./ShowNotification";
 import MapCharacter from "./MapCharacter";
 import RemoveItemFromInventory from "./RemoveItemFromInventory";
+import ModifyGold from "./ModifyGold";
 
 const install = (LiteGraph) => {
   const registerList = [
@@ -26,9 +29,12 @@ const install = (LiteGraph) => {
     RemoveItemFromInventory,
     MoveCharacter,
     AddCharacterToScene,
-    SceneNode,
+    Scene,
+    SceneSwitch,
+    PositionTrigger,
     MapCharacter,
     ShowNotification,
+    ModifyGold,
   ];
   registerList.forEach(node => {
     LiteGraph.registerNodeType({

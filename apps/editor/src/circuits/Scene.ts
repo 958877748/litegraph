@@ -1,6 +1,6 @@
-import { LGraphNode } from "@gausszhou/litegraph-core";
+import { LGraphNode, SerializedLGraphNode } from "@gausszhou/litegraph-core";
 
-export default class SceneNode extends LGraphNode {
+export default class Scene extends LGraphNode {
     static title = "场景";
     static desc = "游戏场景节点，管理场景初始化和配置";
     static shape = 1;
@@ -25,18 +25,19 @@ export default class SceneNode extends LGraphNode {
         this.addInput("地图", "object");  // 地图对象
 
         // 添加输出端口
-        this.addOutput("初始化时", "event");  // 场景初始化时触发
+        this.addOutput("OnInit");  // 场景初始化时触发
+        this.addOutput("OnUpdate");  // 游戏开发中的update循环
 
         // 添加属性控件
         this.addWidget("text", "ID", this.properties.id, "id").disabled = true;
-        this.addWidget("text", "场景名称", this.properties.name, "name");
+        this.addWidget("text", "名称", this.properties.name, "name");
     }
 
     // 查找下一个可用的场景ID
     findNextAvailableId(): number {
         const usedIds = new Set<number>();
         for (const node of this.graph._nodes) {
-            if (node instanceof SceneNode) {
+            if (node instanceof Scene) {
                 usedIds.add(node.properties.id);
             }
         }
@@ -52,5 +53,9 @@ export default class SceneNode extends LGraphNode {
             const newId = this.findNextAvailableId();
             this.setProperty('id', newId);
         }
+    }
+
+    onConfigure(o: SerializedLGraphNode): void {
+        this.size = this.computeSize();
     }
 }
