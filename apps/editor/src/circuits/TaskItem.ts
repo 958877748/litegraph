@@ -1,12 +1,17 @@
 import { LGraphNode } from "@gausszhou/litegraph-core"
 
 export default class TaskItem extends LGraphNode {
-    static title = "TaskItem"
-    static desc = "TaskItem"
+    static title = "任务物品"
+    static desc = "定义游戏中的任务物品"
     static shape = 1
-    static title_color = "#012"
     static registerType = "rpg/TaskItem"
     static filter = "is_filter"
+
+    // 配色方案 - 橙色系
+    static title_color = "#E65100"      // 深橙色标题栏背景
+    static title_text_color = "#FFFFFF"  // 白色标题文字
+    static bgcolor = "#FFF3E0"          // 浅橙色背景
+    static color = "#BF360C"            // 深橙色边框
 
     properties = {
         id: -1,
@@ -16,10 +21,15 @@ export default class TaskItem extends LGraphNode {
 
     constructor() {
         super()
-        this.addOutput("Output", "TaskItem")
-        this.addWidget("text", "ID", this.properties.id, "id",).disabled = true
-        this.addWidget("text", "name", this.properties.name, "name")
-        this.addWidget("text", "desc", this.properties.description, "description")
+        this.addOutput("配置", "物品,任务物品")
+        this.addWidget("text", "ID", this.properties.id, "id").disabled = true
+        this.addWidget("text", "名称", this.properties.name, "name")
+        this.addWidget("text", "描述", this.properties.description, "description", {
+            multiline: true,
+            inputStyle: {
+                height: '60px'
+            }
+        })
     }
 
     findNextAvailableId(): number {
