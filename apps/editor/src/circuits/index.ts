@@ -11,6 +11,7 @@ import AddCharacterToScene from "./AddCharacterToScene";
 import SceneNode from "./SceneNode";
 import ShowNotification from "./ShowNotification";
 import MapCharacter from "./MapCharacter";
+import RemoveItemFromInventory from "./RemoveItemFromInventory";
 
 const install = (LiteGraph) => {
   const registerList = [
@@ -22,6 +23,7 @@ const install = (LiteGraph) => {
     ConsumableItem,
     Say,
     AddItemToInventory,
+    RemoveItemFromInventory,
     MoveCharacter,
     AddCharacterToScene,
     SceneNode,
