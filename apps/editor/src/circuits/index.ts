@@ -5,7 +5,7 @@ import Json2Item from "./Json2Item";
 import ConsumableItem from "./ConsumableItem";
 import EquipItem from "./EquipItem";
 import Say from "./Say";
-import AddItemToInventory from "./AddItemToInventory";
+import ModifyItem from "./ModifyItem";
 import MoveCharacter from "./MoveCharacter";
 import AddCharacterToScene from "./AddCharacterToScene";
 import Scene from "./Scene";
@@ -13,8 +13,9 @@ import SceneSwitch from "./SceneSwitch";
 import PositionTrigger from "./PositionTrigger";
 import ShowNotification from "./ShowNotification";
 import MapCharacter from "./MapCharacter";
-import RemoveItemFromInventory from "./RemoveItemFromInventory";
 import ModifyGold from "./ModifyGold";
+import ConditionNode from "./ConditionNode";
+import PlayerControl from "./PlayerControl";
 
 const install = (LiteGraph) => {
   const registerList = [
@@ -25,8 +26,7 @@ const install = (LiteGraph) => {
     EquipItem,
     ConsumableItem,
     Say,
-    AddItemToInventory,
-    RemoveItemFromInventory,
+    ModifyItem,
     MoveCharacter,
     AddCharacterToScene,
     Scene,
@@ -35,6 +35,8 @@ const install = (LiteGraph) => {
     MapCharacter,
     ShowNotification,
     ModifyGold,
+    ConditionNode,
+    PlayerControl,
   ];
   registerList.forEach(node => {
     LiteGraph.registerNodeType({
