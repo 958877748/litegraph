@@ -23,7 +23,7 @@ export default class AddCharacterToScene extends LGraphNode {
         super();
 
         // 添加输入端口
-        this.addInput("执行", "event");
+        this.addInput("Start", "event");
         this.addInput("角色", "object");
         this.addInput("场景", "object");  // 场景对象
 

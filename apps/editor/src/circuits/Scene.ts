@@ -25,7 +25,7 @@ export default class Scene extends LGraphNode {
         this.addInput("地图", "object");  // 地图对象
 
         // 添加输出端口
-        this.addOutput("OnInit");  // 场景初始化时触发
+        this.addOutput("OnStart", "event");
         this.addOutput("OnUpdate");  // 游戏开发中的update循环
 
         // 添加属性控件
