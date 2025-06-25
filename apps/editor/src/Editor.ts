@@ -3,6 +3,7 @@ import {
   LGraphStatus,
   LGraphCanvas,
   LiteGraph,
+  LinkRenderMode,
 } from "@gausszhou/litegraph";
 
 import circuits from "./circuits/index";
@@ -78,6 +79,7 @@ export default class Editor {
     // create graph
     this.graph = new LGraph();
     this.graphCanvas = new LGraphCanvas(this.canvas, this.graph);
+    this.graphCanvas.links_render_mode = LinkRenderMode.LINEAR_LINK;
     this.graphCanvas.background_image = "./imgs/grid.png";
     this.graph.onAfterExecute = () => {
       this.graphCanvas.draw(true);
