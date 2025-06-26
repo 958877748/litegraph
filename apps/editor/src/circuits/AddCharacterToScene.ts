@@ -22,16 +22,13 @@ export default class AddCharacterToScene extends LGraphNode {
     constructor() {
         super();
 
-        // 添加输入端口
-        this.addInput("Start", "event");
-        this.addInput("角色", "object");
-        this.addInput("场景", "object");  // 场景对象
+        this.addInput("Start");
+        this.addInput("MapCharacter", "MapCharacter");
+        this.addInput("Scene", "Scene");
 
-        // 添加属性控件
         this.addWidget("text", "X坐标", this.properties.x, "x").options.text2int = true;
         this.addWidget("text", "Y坐标", this.properties.y, "y").options.text2int = true;
-       
-        // 添加朝向选择器
+
         this.addWidget("combo", "初始朝向", this.properties.direction, "direction", {
             values: ["上", "下", "左", "右"]
         });

@@ -19,7 +19,7 @@ export default class ConditionNode extends LGraphNode {
 
     constructor() {
         super();
-        this.addInput("Start", "Event");
+        this.addInput("Start");
         this.addOutput("OnYes");
         this.addOutput("OnNo");
 

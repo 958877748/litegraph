@@ -2,7 +2,7 @@ import { LGraphNode } from "@gausszhou/litegraph-core";
 
 export default class ShowNotification extends LGraphNode {
     static title = "显示通知"
-    static desc = "在屏幕上显示一条非阻塞式的提示信息"
+    static desc = "在屏幕上显示一条提示信息"
     static shape = 1
     static registerType = "rpg/ShowNotification"
     static filter = "is_filter"
@@ -15,14 +15,19 @@ export default class ShowNotification extends LGraphNode {
 
     properties = {
         context: '',
+        black: false,
         time: 1
     }
 
     constructor() {
         super()
-        this.addInput('执行')
+        this.addInput('Start')
+        this.addOutput('OnEnd')
+
         this.addWidget('text', '内容', this.properties.context, 'context')
+        // 添加切换按钮
+        this.addWidget("toggle", "黑色背景", this.properties.black, "black");
         this.addWidget('text', '时间', this.properties.time, 'time').options.text2int = true
-        this.addOutput('结束时')
+        
     }
 }

@@ -20,14 +20,11 @@ export default class Say extends LGraphNode {
   constructor() {
     super();
 
-    // 添加输入端口
-    this.addInput("执行", "event");
-    this.addInput("角色", "string");
+    this.addInput("Start");
+    this.addInput("MapCharacter", "MapCharacter");
 
-    // 添加输出端口
-    this.addOutput("结束时");
+    this.addOutput("OnEnd");
 
-    // 添加多行文本框
     this.addWidget("text", "内容", this.properties.content, "content", {
       property: "content",
       multiline: true,  // 启用多行

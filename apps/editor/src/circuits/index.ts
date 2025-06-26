@@ -16,6 +16,8 @@ import MapCharacter from "./MapCharacter";
 import ModifyGold from "./ModifyGold";
 import ConditionNode from "./ConditionNode";
 import PlayerControl from "./PlayerControl";
+import DelayNode from "./Delay";
+import CompleteEvent from "./CompleteEvent";
 
 const install = (LiteGraph) => {
   const registerList = [
@@ -37,6 +39,8 @@ const install = (LiteGraph) => {
     ModifyGold,
     ConditionNode,
     PlayerControl,
+    DelayNode,
+    CompleteEvent,
   ];
   registerList.forEach(node => {
     LiteGraph.registerNodeType({

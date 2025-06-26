@@ -32,8 +32,8 @@ export default class MapCharacter extends LGraphNode {
         super();
 
         // 添加输出端口
-        this.addOutput("角色", "角色");
-        this.addOutput("OnInteractive", "object");
+        this.addOutput("MapCharacter", "MapCharacter");
+        this.addOutput("OnInteractive");
 
         // 添加属性控件
         this.addWidget("text", "ID", this.properties.id, "id").disabled = true;
