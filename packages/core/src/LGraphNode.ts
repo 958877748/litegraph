@@ -1696,6 +1696,10 @@ export default class LGraphNode {
             this.widgets = [];
         }
 
+        if (type === "combo" && options?.enum) {
+            options.values = Object.keys(options.enum).filter(key => isNaN(Number(key)))
+        }
+
         if (!options && callback && callback.constructor === Object) {
             options = callback;
             callback = null;

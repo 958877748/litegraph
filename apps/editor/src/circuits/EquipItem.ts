@@ -1,4 +1,5 @@
 import { LGraphNode } from "@gausszhou/litegraph-core";
+import { CharacterClass } from "./BattleCharacter";
 
 export enum EquipType {
     武器 = 10,
@@ -6,14 +7,6 @@ export enum EquipType {
     胸甲 = 12,
     盾牌 = 13,
     首饰 = 14
-}
-
-export enum CharClass {
-    通用 = 0,
-    剑士 = 1,
-    魔法师 = 2,
-    战士 = 3,
-    弓箭手 = 4
 }
 
 export default class EquipItem extends LGraphNode {
@@ -30,7 +23,7 @@ export default class EquipItem extends LGraphNode {
         description: '',
         type: EquipType.武器,
         price: 0,
-        class: CharClass.通用,
+        class: CharacterClass.通用,
         hp: 0,
         mp: 0,
         attack: 0,
@@ -60,12 +53,9 @@ export default class EquipItem extends LGraphNode {
         this.addWidget(
             "combo",         // 使用下拉框控件
             "class",      // 显示名称
-            CharClass[this.properties.class], // 初始值
+            CharacterClass[this.properties.class], // 初始值
             'class',
-            {   // 配置选项             
-                values: Object.keys(CharClass).filter(key => isNaN(Number(key))),
-                enum: CharClass,
-            }
+            { enum: CharacterClass }
         );
         this.addWidget('text', 'price', `${this.properties.price}`, 'price').options.text2int = true;
         this.addWidget('text', 'hp', this.properties.hp, 'hp').options.text2int = true;

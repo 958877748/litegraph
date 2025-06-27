@@ -1,4 +1,5 @@
 import { LGraphNode } from "@gausszhou/litegraph-core";
+import { InputConfig } from "./NodeSoltConfig";
 
 export default class AddCharacterToScene extends LGraphNode {
     static title = "添加角色到场景";
@@ -23,8 +24,8 @@ export default class AddCharacterToScene extends LGraphNode {
         super();
 
         this.addInput("Start");
-        this.addInput("MapCharacter", "MapCharacter");
-        this.addInput("Scene", "Scene");
+        this.addInput("MapCharacter", "MapCharacter", InputConfig);
+        this.addInput("Scene", "Scene", InputConfig);
 
         this.addWidget("text", "X坐标", this.properties.x, "x").options.text2int = true;
         this.addWidget("text", "Y坐标", this.properties.y, "y").options.text2int = true;
